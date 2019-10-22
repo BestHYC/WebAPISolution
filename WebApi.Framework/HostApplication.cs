@@ -24,7 +24,7 @@ namespace WebApi.Framework
         /// <param name="context"></param>
         public Task ProcessRequestAsync(HttpBaseContext context)
         {
-            return Task.Run(() => m_routingmodule.Init(context));
+            return new Task(() => m_routingmodule.Init(context));
         }
         /// <summary>
         /// 
@@ -36,6 +36,9 @@ namespace WebApi.Framework
             
         }
     }
+    /// <summary>
+    /// 此处为伪代码,模拟http传输解析使用
+    /// </summary>
     public class HttpTranferApplication
     {
         private IHostApplication<HttpBaseContext> m_application;
@@ -43,6 +46,10 @@ namespace WebApi.Framework
         {
             m_application = new HostApplication();
         }
+        /// <summary>
+        /// 这里实质是通过http去做解析,但是这里就做了一个简单的类型,实现后期功能
+        /// </summary>
+        /// <param name="model"></param>
         public void Execute(HttpTranferModel model)
         {
             HttpBaseContext context = m_application.CreateContext();
@@ -53,7 +60,10 @@ namespace WebApi.Framework
                 context.Request.QueryParams += item.Key + "=" + item.Value + "&";
             }
             context.Request.Uri = model.Url;
-            m_application.ProcessRequestAsync(context);
+            Task task = m_application.ProcessRequestAsync(context);
+            task.ContinueWith(t => Console.WriteLine("请求结束"));
+            task.ContinueWith(t => Console.WriteLine("请求报错,错误为" + t.Exception), TaskContinuationOptions.OnlyOnFaulted);
+            task.Start();
         }
     }
     public class HttpTranferModel

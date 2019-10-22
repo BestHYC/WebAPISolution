@@ -18,7 +18,6 @@ namespace WebApiApplication
         public static void Register(RouteCollection config)
         {
             config.IgnoreUrl(".js");
-
             config.Add(new Route(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}/{id}",

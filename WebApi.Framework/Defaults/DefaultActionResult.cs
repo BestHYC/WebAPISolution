@@ -10,7 +10,7 @@ namespace WebApi.Framework
         public override void ExecuteResult(ControllerContext context)
         {
             HttpBaseContext baseContext = context.RequestContext.Context;
-            if(this.Code != default(ResponseCode))
+            if(this.Code != default)
             {
                 this.Code = ResponseCode.Success;
             }
