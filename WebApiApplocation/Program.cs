@@ -37,6 +37,7 @@ namespace WebApiApplication
         {
             //设置初始路由,即默认的路由模板
             Global();
+            //注意此处的路由返回值,具体看Controller文件夹下的HomeController,就是webapi的实现方式
             HttpTranferApplication application = new HttpTranferApplication();
             //此处是默认路由执行
             //{"Headers":{},"Body":{},"QueryParams":{},"Url":"api"}
